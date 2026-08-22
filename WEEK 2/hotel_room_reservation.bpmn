@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="D_hotel_room_reservation" targetNamespace="http://example.com/bpmn/lab">
+  <process id="hotel_room_reservation" name="Hotel Room Reservation" isExecutable="false">
+    <startEvent id="start" name="Booking Request Submitted" />
+    <userTask id="t1" name="Submit Room Booking Request" />
+    <serviceTask id="t2" name="Check Room Availability" />
+    <exclusiveGateway id="g1" name="Rooms Available?" />
+    <sendTask id="t3" name="Notify: No Rooms Available" />
+    <endEvent id="end1" name="Reservation Ended" />
+    <userTask id="t4" name="Make Advance/Deposit Payment" />
+    <serviceTask id="t5" name="Process Payment" />
+    <exclusiveGateway id="g2" name="Payment Successful?" />
+    <serviceTask id="t6" name="Confirm Booking &amp; Generate Reference" />
+    <sendTask id="t7" name="Send Booking Confirmation Email" />
+    <endEvent id="end2" name="Booking Completed" />
+    <sendTask id="t8" name="Notify: Payment Failed" />
+    <endEvent id="end3" name="Reservation Ended" />
+    <sequenceFlow id="f1" sourceRef="start" targetRef="t1" />
+    <sequenceFlow id="f2" sourceRef="t1" targetRef="t2" />
+    <sequenceFlow id="f3" sourceRef="t2" targetRef="g1" />
+    <sequenceFlow id="f4" sourceRef="g1" targetRef="t3" name="No">
+      <conditionExpression xsi:type="tFormalExpression">roomsAvailable = false</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f5" sourceRef="t3" targetRef="end1" />
+    <sequenceFlow id="f6" sourceRef="g1" targetRef="t4" name="Yes">
+      <conditionExpression xsi:type="tFormalExpression">roomsAvailable = true</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f7" sourceRef="t4" targetRef="t5" />
+    <sequenceFlow id="f8" sourceRef="t5" targetRef="g2" />
+    <sequenceFlow id="f9" sourceRef="g2" targetRef="t6" name="Yes">
+      <conditionExpression xsi:type="tFormalExpression">paymentSuccessful = true</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f10" sourceRef="t6" targetRef="t7" />
+    <sequenceFlow id="f11" sourceRef="t7" targetRef="end2" />
+    <sequenceFlow id="f12" sourceRef="g2" targetRef="t8" name="No">
+      <conditionExpression xsi:type="tFormalExpression">paymentSuccessful = false</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="f13" sourceRef="t8" targetRef="end3" />
+  </process>
+  <bpmndi:BPMNDiagram id="DG_hotel_room_reservation" />
+  <bpmndi:BPMNPlane id="PL_hotel_room_reservation" bpmnElement="hotel_room_reservation">
+    <bpmndi:BPMNShape id="DI_start" bpmnElement="start">
+      <dc:Bounds x="50" y="220" width="36" height="36" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t1" bpmnElement="t1">
+      <dc:Bounds x="110" y="198" width="160" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t2" bpmnElement="t2">
+      <dc:Bounds x="320" y="198" width="180" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_g1" bpmnElement="g1">
+      <dc:Bounds x="550" y="213" width="50" height="50" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t3" bpmnElement="t3">
+      <dc:Bounds x="650" y="60" width="210" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_end1" bpmnElement="end1">
+      <dc:Bounds x="900" y="82" width="36" height="36" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t4" bpmnElement="t4">
+      <dc:Bounds x="650" y="220" width="190" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t5" bpmnElement="t5">
+      <dc:Bounds x="880" y="220" width="170" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_g2" bpmnElement="g2">
+      <dc:Bounds x="1090" y="235" width="50" height="50" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t6" bpmnElement="t6">
+      <dc:Bounds x="1190" y="220" width="210" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t7" bpmnElement="t7">
+      <dc:Bounds x="1440" y="220" width="220" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_end2" bpmnElement="end2">
+      <dc:Bounds x="1700" y="242" width="36" height="36" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_t8" bpmnElement="t8">
+      <dc:Bounds x="1190" y="420" width="190" height="80" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNShape id="DI_end3" bpmnElement="end3">
+      <dc:Bounds x="1420" y="442" width="36" height="36" />
+    </bpmndi:BPMNShape>
+    <bpmndi:BPMNEdge id="DI_f1" bpmnElement="f1">
+      <di:waypoint x="68.0" y="238.0" />
+      <di:waypoint x="190.0" y="238.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f2" bpmnElement="f2">
+      <di:waypoint x="190.0" y="238.0" />
+      <di:waypoint x="410.0" y="238.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f3" bpmnElement="f3">
+      <di:waypoint x="410.0" y="238.0" />
+      <di:waypoint x="575.0" y="238.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f4" bpmnElement="f4">
+      <di:waypoint x="575.0" y="238.0" />
+      <di:waypoint x="755.0" y="100.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f5" bpmnElement="f5">
+      <di:waypoint x="755.0" y="100.0" />
+      <di:waypoint x="918.0" y="100.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f6" bpmnElement="f6">
+      <di:waypoint x="575.0" y="238.0" />
+      <di:waypoint x="745.0" y="260.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f7" bpmnElement="f7">
+      <di:waypoint x="745.0" y="260.0" />
+      <di:waypoint x="965.0" y="260.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f8" bpmnElement="f8">
+      <di:waypoint x="965.0" y="260.0" />
+      <di:waypoint x="1115.0" y="260.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f9" bpmnElement="f9">
+      <di:waypoint x="1115.0" y="260.0" />
+      <di:waypoint x="1295.0" y="260.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f10" bpmnElement="f10">
+      <di:waypoint x="1295.0" y="260.0" />
+      <di:waypoint x="1550.0" y="260.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f11" bpmnElement="f11">
+      <di:waypoint x="1550.0" y="260.0" />
+      <di:waypoint x="1718.0" y="260.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f12" bpmnElement="f12">
+      <di:waypoint x="1115.0" y="260.0" />
+      <di:waypoint x="1285.0" y="460.0" />
+    </bpmndi:BPMNEdge>
+    <bpmndi:BPMNEdge id="DI_f13" bpmnElement="f13">
+      <di:waypoint x="1285.0" y="460.0" />
+      <di:waypoint x="1438.0" y="460.0" />
+    </bpmndi:BPMNEdge>
+  </bpmndi:BPMNPlane>
+</definitions>
